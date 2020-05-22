@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  scrapy:
+    build: .
+    container_name: crawler
+    volumes:
+      - .:/app
+    tty: true
+
