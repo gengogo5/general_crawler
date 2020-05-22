@@ -7,4 +7,13 @@ services:
     volumes:
       - .:/app
     tty: true
+    links:
+      - db
 
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test
+    ports:
+      - "3307:3306"
