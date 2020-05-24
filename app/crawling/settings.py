@@ -91,3 +91,10 @@ DOWNLOAD_DELAY = 1
 
 FEED_EXPORT_ENCODING = 'utf-8'
 
+DATABASE = {
+    'host': 'db',
+    'db': 'test',
+    'user': 'root',
+    'passwd': 'password',
+    'charset': 'utf8mb4',
+}
