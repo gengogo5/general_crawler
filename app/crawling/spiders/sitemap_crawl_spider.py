@@ -11,7 +11,9 @@ class SitemapCrawlSpider(SitemapSpider):
     sitemap_follow = []
     sitemap_rules = []
 
-    # TODO: 重複除外
+    custom_settings = {
+        'DUPEFILTER_CLASS': 'crawling.dupefilter.ArticleArchiveDupeFilter'
+    }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
