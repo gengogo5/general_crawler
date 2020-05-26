@@ -23,9 +23,7 @@ class RSSCrawlSpider(XMLFeedSpider):
     # 繰り返しのタグ見つけたら、linkノードからurlを取得する
     def parse_node(self, response, node):
         url = node.xpath(f'./{self.link_node}/text()').extract()[0]
-        logging.info('------------------------------')
-        logging.info(url)
-        return scrapy.Request(url, self.parse_item)
+        return scrapy.Request(response.urljoin(url), self.parse_item)
         
     def parse_item(self, response):
         item = ArticleArchives()
