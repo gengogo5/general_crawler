@@ -20,17 +20,19 @@ class RegularCrawlSpider(CrawlSpider):
         params = json.loads(self.payload)
         self.start_urls = params['start_urls'] # 必須
         index_patterns  = params.get('index_patterns') # 任意
-        allow_patterns  = params.get('article_patterns') # 任意
-        deny_patterns   = params.get('except_article_patterns') # 任意
+        allow_patterns  = params.get('article_patterns') # 必須
+        deny_patterns   = params.get('except_article_patterns', []) # 任意
+        shouldFollow    = params.get('should_follow', False) # 任意
 
         # ルール設定
-        # TODO: raw_ruleは最初からrules変数使っていいかもしれない(項目数が可変か検討)
         # TODO: 正規表現を事前サニタイズするかどうか(検証済を受け入れる前提でも可)
-        # TODO: followの制御フラグ
         raw_rule = []
         if index_patterns:
             raw_rule.append(Rule(LinkExtractor(allow=tuple(index_patterns))))
-        raw_rule.append(Rule(LinkExtractor(allow=tuple(allow_patterns), deny=tuple(deny_patterns)), follow=False, callback='parse_item'))
+        raw_rule.append(Rule(LinkExtractor(allow=tuple(allow_patterns), \
+                                           deny=tuple(deny_patterns)), \
+                                           follow=shouldFollow, \
+                                           callback='parse_item'))
 
         self.rules = tuple(raw_rule)
         self._compile_rules() # 動的なルール生成に必要
