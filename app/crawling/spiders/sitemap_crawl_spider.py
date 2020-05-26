@@ -2,6 +2,7 @@
 import json
 import re
 import logging
+import scrapy
 from scrapy.spiders import SitemapSpider
 from crawling.article_archives import ArticleArchives
 
