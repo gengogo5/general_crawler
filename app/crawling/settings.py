@@ -66,6 +66,7 @@ DOWNLOAD_DELAY = 3
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'crawling.pipelines.CrawlingPipeline': 300,
+    'crawling.pipelines.DryRunPipeline': 500,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

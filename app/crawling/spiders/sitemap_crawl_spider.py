@@ -23,6 +23,7 @@ class SitemapCrawlSpider(SitemapSpider):
         sitemap_url = params['sitemap_url'] # 必須
         except_patterns = params['except_article_patterns'] # 任意
         sitemap_patterns = params['sitemap_patterns'] # 任意
+        self.is_dryrun  = params.get('is_dryrun', False) # 任意
 
         # Seedのサイトマップを追加
         self.sitemap_urls.append(sitemap_url)

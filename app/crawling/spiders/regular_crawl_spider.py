@@ -23,6 +23,7 @@ class RegularCrawlSpider(CrawlSpider):
         allow_patterns  = params.get('article_patterns') # 必須
         deny_patterns   = params.get('except_article_patterns', []) # 任意
         shouldFollow    = params.get('should_follow', False) # 任意
+        self.is_dryrun  = params.get('is_dryrun', False) # 任意
 
         # ルール設定
         # TODO: 正規表現を事前サニタイズするかどうか(検証済を受け入れる前提でも可)

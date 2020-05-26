@@ -21,6 +21,7 @@ class RSSCrawlSpider(XMLFeedSpider):
         self.start_urls  = params['rss_urls']  # 必須
         self.itertag     = params['tag_name']  # 必須
         self.link_node   = params['link_node_name'] # 必須
+        self.is_dryrun   = params.get('is_dryrun', False) # 任意
         for p in params.get('except_article_patterns', []): # 任意
             self.except_regexps.append(re.compile(p))
 
