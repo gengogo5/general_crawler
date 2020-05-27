@@ -4,11 +4,13 @@ import logging
 import json
 import re
 from scrapy.spiders import XMLFeedSpider
+from scrapy.exceptions import CloseSpider
 from crawling.article_archives import ArticleArchives
 
 class RSSCrawlSpider(XMLFeedSpider):
     name = 'rss_crawl'
     except_regexps = []
+    itemcounts = 0
 
     custom_settings = {
         'DUPEFILTER_CLASS': 'crawling.dupefilter.ArticleArchiveDupeFilter'
@@ -21,6 +23,7 @@ class RSSCrawlSpider(XMLFeedSpider):
         self.start_urls  = params['rss_urls']  # 必須
         self.itertag     = params['tag_name']  # 必須
         self.link_node   = params['link_node_name'] # 必須
+        self.is_dryrun   = params.get('is_dryrun', False) # 任意
         for p in params.get('except_article_patterns', []): # 任意
             self.except_regexps.append(re.compile(p))
 
@@ -34,9 +37,12 @@ class RSSCrawlSpider(XMLFeedSpider):
             if r.search(joined_url):
                 logging.debug(f'excepted page [{joined_url}]')
                 return
-        return scrapy.Request(joined_url, self.parse_item)
+        return scrapy.Request(url=joined_url, callback=self.parse_item)
         
     def parse_item(self, response):
+        self.itemcounts += 1
+        if self.is_dryrun and self.itemcounts > self.settings['TRIAL_ITEM_COUNT']:
+            raise CloseSpider('dryrun stopped')
         item = ArticleArchives()
         item.set(item, response)
         yield item

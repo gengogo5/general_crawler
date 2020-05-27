@@ -22,7 +22,7 @@ USER_AGENT = 'crawling'
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 2
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -59,13 +59,17 @@ DOWNLOAD_DELAY = 3
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
+#    'scrapy.extensions.closespider.CloseSpider': 100,
 #}
+
+# Custom Settings for dryrun
+TRIAL_ITEM_COUNT = 15
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'crawling.pipelines.CrawlingPipeline': 300,
+    'crawling.pipelines.DryRunPipeline': 500,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

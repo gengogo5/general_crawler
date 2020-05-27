@@ -3,6 +3,7 @@ import json
 import re
 import logging
 import scrapy
+from scrapy.exceptions import CloseSpider
 from scrapy.spiders import SitemapSpider
 from crawling.article_archives import ArticleArchives
 
@@ -11,6 +12,7 @@ class SitemapCrawlSpider(SitemapSpider):
     sitemap_urls = []
     sitemap_follow = []
     sitemap_rules = []
+    itemcounts = 0
 
     custom_settings = {
         'DUPEFILTER_CLASS': 'crawling.dupefilter.ArticleArchiveDupeFilter'
@@ -21,8 +23,9 @@ class SitemapCrawlSpider(SitemapSpider):
         # 引数から各種設定を取得
         params = json.loads(self.payload)
         sitemap_url = params['sitemap_url'] # 必須
-        except_patterns = params['except_article_patterns'] # 任意
-        sitemap_patterns = params['sitemap_patterns'] # 任意
+        except_patterns = params.get('except_article_patterns',[]) # 任意
+        sitemap_patterns = params.get('sitemap_patterns',[]) # 任意
+        self.is_dryrun  = params.get('is_dryrun', False) # 任意
 
         # Seedのサイトマップを追加
         self.sitemap_urls.append(sitemap_url)
@@ -42,6 +45,10 @@ class SitemapCrawlSpider(SitemapSpider):
         # TODO: 圧縮サイトマップをungzipする
 
     def parse(self, response):
+        # dryrun設定
+        self.itemcounts += 1
+        if self.is_dryrun and self.itemcounts > self.settings['TRIAL_ITEM_COUNT']:
+            raise CloseSpider('dryrun stopped')
         item = ArticleArchives()
         item.set(item, response)
         yield item
