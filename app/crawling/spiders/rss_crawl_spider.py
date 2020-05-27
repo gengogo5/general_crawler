@@ -37,10 +37,7 @@ class RSSCrawlSpider(XMLFeedSpider):
             if r.search(joined_url):
                 logging.debug(f'excepted page [{joined_url}]')
                 return
-        # dryrun時は重複チェックをしない
-        return scrapy.Request(url=joined_url, \
-                              dont_filter=self.is_dryrun, \
-                              callback=self.parse_item)
+        return scrapy.Request(url=joined_url, callback=self.parse_item)
         
     def parse_item(self, response):
         self.itemcounts += 1
