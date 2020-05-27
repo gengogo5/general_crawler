@@ -59,8 +59,11 @@ DOWNLOAD_DELAY = 3
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
+#    'scrapy.extensions.closespider.CloseSpider': 100,
 #}
+
+# Custom Settings for dryrun
+TEST_ITEM_COUNT = 3
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html

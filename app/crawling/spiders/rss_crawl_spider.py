@@ -4,11 +4,13 @@ import logging
 import json
 import re
 from scrapy.spiders import XMLFeedSpider
+from scrapy.exceptions import CloseSpider
 from crawling.article_archives import ArticleArchives
 
 class RSSCrawlSpider(XMLFeedSpider):
     name = 'rss_crawl'
     except_regexps = []
+    itemcounts = 0
 
     custom_settings = {
         'DUPEFILTER_CLASS': 'crawling.dupefilter.ArticleArchiveDupeFilter'
@@ -38,6 +40,9 @@ class RSSCrawlSpider(XMLFeedSpider):
         return scrapy.Request(joined_url, self.parse_item)
         
     def parse_item(self, response):
+        self.itemcounts += 1
+        if self.is_dryrun and self.itemcounts > self.settings['TEST_ITEM_COUNT']:
+            raise CloseSpider('dryrun stopped at 20 items')
         item = ArticleArchives()
         item.set(item, response)
         yield item
