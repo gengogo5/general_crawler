@@ -23,8 +23,8 @@ class SitemapCrawlSpider(SitemapSpider):
         # 引数から各種設定を取得
         params = json.loads(self.payload)
         sitemap_url = params['sitemap_url'] # 必須
-        except_patterns = params['except_article_patterns'] # 任意
-        sitemap_patterns = params['sitemap_patterns'] # 任意
+        except_patterns = params.get('except_article_patterns',[]) # 任意
+        sitemap_patterns = params.get('sitemap_patterns',[]) # 任意
         self.is_dryrun  = params.get('is_dryrun', False) # 任意
 
         # Seedのサイトマップを追加
