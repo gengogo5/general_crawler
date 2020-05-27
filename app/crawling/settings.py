@@ -63,7 +63,7 @@ DOWNLOAD_DELAY = 3
 #}
 
 # Custom Settings for dryrun
-TRIAL_ITEM_COUNT = 3
+TRIAL_ITEM_COUNT = 15
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
