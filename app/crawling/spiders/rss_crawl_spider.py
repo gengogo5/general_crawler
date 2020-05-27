@@ -41,8 +41,8 @@ class RSSCrawlSpider(XMLFeedSpider):
         
     def parse_item(self, response):
         self.itemcounts += 1
-        if self.is_dryrun and self.itemcounts > self.settings['TEST_ITEM_COUNT']:
-            raise CloseSpider('dryrun stopped at 20 items')
+        if self.is_dryrun and self.itemcounts > self.settings['TRIAL_ITEM_COUNT']:
+            raise CloseSpider('dryrun stopped')
         item = ArticleArchives()
         item.set(item, response)
         yield item

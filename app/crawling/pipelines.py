@@ -56,7 +56,7 @@ class DryRunPipeline:
         self.file.close()
 
     def process_item(self, item, spider):
-        if not spider.is_dryrun: return
+        if not spider.is_dryrun: return item
         line = item['url'] + "\n"
         self.file.write(line)
         return item

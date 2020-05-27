@@ -22,7 +22,7 @@ USER_AGENT = 'crawling'
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 2
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -63,7 +63,7 @@ DOWNLOAD_DELAY = 3
 #}
 
 # Custom Settings for dryrun
-TEST_ITEM_COUNT = 3
+TRIAL_ITEM_COUNT = 3
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
