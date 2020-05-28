@@ -16,7 +16,6 @@ CREATE TABLE test.crawl_requests (
   id             int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   job_id         varchar(255) DEFAULT NULL,
   job_type       varchar(50) NOT NULL,
-  start_urls     text NOT NULL,
   rules          json,
   schedule_type  varchar(50) NOT NULL,
   interval_hours int(10) UNSIGNED DEFAULT NULL,
