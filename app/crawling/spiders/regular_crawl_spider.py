@@ -5,6 +5,7 @@ from scrapy.exceptions import CloseSpider
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from crawling.article_archives import ArticleArchives
+from crawling.utils.rule_loader import RuleLoader
 
 class RegularCrawlSpider(CrawlSpider):
     name = 'regular_crawl'
@@ -17,15 +18,18 @@ class RegularCrawlSpider(CrawlSpider):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # 引数から各種設定を取得
+        # 引数から要求IDを取得
         params = json.loads(self.payload)
-        self.start_urls = params['start_urls'] # 必須
-        index_patterns  = params.get('index_patterns') # 任意
-        allow_patterns  = params.get('article_patterns') # 必須
-        deny_patterns   = params.get('except_article_patterns', []) # 任意
-        shouldFollow    = params.get('should_follow', False) # 任意
-        self.is_dryrun  = params.get('is_dryrun', False) # 任意
+        self.req_id = params['req_id']
+        self.is_dryrun = params.get('is_dryrun', False)
+
+        # DBから各種設定を取得
+        rules = RuleLoader.find(self.req_id)
+        self.start_urls = rules['start_urls'] # 必須
+        index_patterns  = rules.get('index_patterns') # 任意
+        allow_patterns  = rules.get('article_patterns') # 必須
+        deny_patterns   = rules.get('except_article_patterns', []) # 任意
+        shouldFollow    = rules.get('should_follow', False) # 任意
 
         # ルール設定
         # TODO: 正規表現を事前サニタイズするかどうか(検証済を受け入れる前提でも可)

@@ -6,6 +6,7 @@ import re
 from scrapy.spiders import XMLFeedSpider
 from scrapy.exceptions import CloseSpider
 from crawling.article_archives import ArticleArchives
+from crawling.utils.rule_loader import RuleLoader
 
 class RSSCrawlSpider(XMLFeedSpider):
     name = 'rss_crawl'
@@ -18,12 +19,16 @@ class RSSCrawlSpider(XMLFeedSpider):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # 引数から各種設定を取得
+        # 引数から要求IDを取得
         params = json.loads(self.payload)
-        self.start_urls  = params['rss_urls']  # 必須
-        self.itertag     = params['tag_name']  # 必須
-        self.link_node   = params['link_node_name'] # 必須
-        self.is_dryrun   = params.get('is_dryrun', False) # 任意
+        self.req_id = params['req_id']
+        self.is_dryrun = params.get('is_dryrun', False)
+
+        # DBから各種設定を取得
+        rules = RuleLoader.find(self.req_id)
+        self.start_urls  = rules['rss_urls']  # 必須
+        self.itertag     = rules['tag_name']  # 必須
+        self.link_node   = rules['link_node_name'] # 必須
         for p in params.get('except_article_patterns', []): # 任意
             self.except_regexps.append(re.compile(p))
 
