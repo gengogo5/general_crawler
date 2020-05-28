@@ -7,6 +7,7 @@ namespace :server do
   desc "サーバを停止する"
   task :stop do
     sh "docker-compose down"
+    sh "rm app/projects/schedule.db.bak*"
   end
 end
 
