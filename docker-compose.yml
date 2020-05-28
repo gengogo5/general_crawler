@@ -3,10 +3,12 @@ version: '3'
 services:
   scrapy:
     build: .
+    command: scrapy-do -n scrapy-do --config ./scrapy-do.conf
     container_name: crawler
+    ports:
+      - "7654:7654"
     volumes:
       - ./app:/usr/src/app
-    tty: true
     links:
       - db
 

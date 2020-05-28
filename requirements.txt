@@ -1,4 +1,5 @@
 ###### Requirements with Version Specifiers ######
 scrapy==2.1.0
 mysqlclient==1.4.6
+scrapy-do==0.4.0
 
