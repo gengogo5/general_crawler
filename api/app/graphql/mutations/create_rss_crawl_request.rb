@@ -1,7 +1,7 @@
 require 'json'
 module Mutations
-  class CreateCrawlRequest < BaseMutation
-    graphql_name 'CreateCrawlRequest'
+  class CreateRssCrawlRequest < BaseMutation
+    graphql_name 'CreateRssCrawlRequest'
     field :crawl_request, Types::CrawlRequestType, null: true
     field :result, Boolean, null: true
 
