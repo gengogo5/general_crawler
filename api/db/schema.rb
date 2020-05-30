@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_170809) do
+ActiveRecord::Schema.define(version: 2020_05_30_085414) do
 
   create_table "article_archives", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.text "url", null: false
@@ -25,7 +25,8 @@ ActiveRecord::Schema.define(version: 2020_05_29_170809) do
   create_table "crawl_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "job_id"
     t.string "job_type", null: false
-    t.json "rules"
+    t.text "rules"
+    t.text "rules2"
     t.string "schedule_type", null: false
     t.integer "interval_hours"
     t.datetime "created_at", null: false
