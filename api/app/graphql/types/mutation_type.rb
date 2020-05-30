@@ -1,5 +1,11 @@
 module Types
   class MutationType < Types::BaseObject
+    field :create_regular_crawl_request, mutation: Mutations::CreateRegularCrawlRequest
+    field :create_sitemap_crawl_request, mutation: Mutations::CreateSitemapCrawlRequest
+    field :create_rss_crawl_request, mutation: Mutations::CreateRssCrawlRequest
+    # TODO: 更新と削除
+    field :delete_crawl_request, mutation: Mutations::DeleteCrawlRequest
+    field :update_crawl_request, mutation: Mutations::UpdateCrawlRequest
     # TODO: remove me
     field :test_field, String, null: false,
       description: "An example field added by the generator"
