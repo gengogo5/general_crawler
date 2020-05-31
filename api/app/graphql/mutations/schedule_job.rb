@@ -3,7 +3,8 @@ module Mutations
   class ScheduleJob < BaseMutation
     graphql_name 'ScheduleJob'
     field :crawl_request, Types::CrawlRequestType, null: true
-    field :result, Boolean, null: true
+    field :is_dryrun, Boolean, null: true
+    field :result, String, null: true
 
     argument :request_id, ID, required: true
     argument :is_dryrun, Boolean, required: false
@@ -38,7 +39,8 @@ module Mutations
 
       {
         crawl_request: job,
-        result: response.status
+        is_dryrun: is_dryrun,
+        result: resj['status']
       }
     end
   end
