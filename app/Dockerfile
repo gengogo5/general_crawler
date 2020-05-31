@@ -14,6 +14,6 @@ RUN apk add --update --no-cache \
 ADD requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
-ADD ./app /usr/src/app
+ADD . /usr/src/app
 WORKDIR /usr/src/app
 
