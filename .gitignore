@@ -188,6 +188,9 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 
+minio_data/*
+!minio_data/.gitkeep
+
 # End of https://www.gitignore.io/api/rails
 
 # End of https://www.gitignore.io/api/python
