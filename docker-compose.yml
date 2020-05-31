@@ -2,7 +2,7 @@ version: '3'
 
 services:
   scrapy:
-    build: .
+    build: ./app
     command: scrapy-do -n scrapy-do --config ./scrapy-do.conf
     container_name: crawler
     ports:

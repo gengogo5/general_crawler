@@ -15,9 +15,9 @@ module Mutations
       request = CrawlRequest.create(
         job_type: args[:job_type],
         rules: JSON.generate(
-          { :rss_urls => args[:rss_urls],
-            :tag_name => args[:tag_name],
-            :link_node_name => args[:link_node_name]
+          { rss_urls: args[:rss_urls],
+            tag_name: args[:tag_name],
+            link_node_name: args[:link_node_name]
           }
         ),
         schedule_type: args[:schedule_type]       

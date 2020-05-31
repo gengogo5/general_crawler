@@ -7,6 +7,7 @@ module Types
     field :rss_urls, String, null: true
     field :tag_name, String, null: true
     field :link_node_name, String, null: true
+    field :is_dryrun, Boolean, null: true
     field :schedule_type, String, null: true
     field :interval_hours, Integer, null: true
   end
