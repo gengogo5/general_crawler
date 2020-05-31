@@ -30,10 +30,11 @@ module Mutations
               'spider' => "#{job.job_type}_crawl",
               'when' => "#{schedule}",
               'payload' => "{\"req_id\": #{job.id}, \"is_dryrun\": #{is_dryrun}}"}
-      response = client.post(url, body)
+      res = client.post(url, body)
 
-      resj = JSON.parse(response.body)
-      if resj['status'] == 'ok' && job.schedule_type == 'intervals'
+      # 即時実行でない場合は定期実行されるのでジョブIDを登録する
+      resj = JSON.parse(res.body)
+      if resj['status'] == 'ok' && schedule != 'now'
           job.update(job_id: resj['identifier'])
       end
 
