@@ -31,6 +31,10 @@ class SitemapCrawlSpider(SitemapSpider):
         sitemap_url = rules['sitemap_url'] # 必須
         except_patterns = rules.get('except_article_patterns',[]) # 任意
         sitemap_patterns = rules.get('sitemap_patterns',[]) # 任意
+        rp = rules.get('url_replace_pattern','') # 任意
+        if rp:
+            self.url_replace_pattern = re.compile(rp)
+        self.replace_new_string = rules.get('replace_new_string','') # 任意
 
         # Seedのサイトマップを追加
         self.sitemap_urls.append(sitemap_url)
