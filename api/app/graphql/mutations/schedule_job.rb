@@ -31,9 +31,14 @@ module Mutations
               'payload' => "{\"req_id\": #{job.id}, \"is_dryrun\": #{is_dryrun}}"}
       response = client.post(url, body)
 
+      resj = JSON.parse(response.body)
+      if resj['status'] == 'ok' && job.schedule_type == 'intervals'
+          job.update(job_id: resj['identifier'])
+      end
+
       {
         crawl_request: job,
-        result: response
+        result: response.status
       }
     end
   end
