@@ -16,11 +16,18 @@ module Mutations
 
       # dryrunの時は即時実行にする
       is_dryrun = args[:is_dryrun]
-      schedule_type = is_dryrun ? 'now' : job.schedule_type
+      schedule = if is_dryrun || job.schedule_type == 'now'
+                   'now'
+                 elsif job.schedule_type == 'intervals'
+                   "every #{job.interval_hours} hours" 
+                 else
+                  # TODO: 例外にする
+                   'now'
+                 end
 
       body = {'project'=> 'crawling',
               'spider' => "#{job.job_type}_crawl",
-              'when' => "#{schedule_type}",
+              'when' => "#{schedule}",
               'payload' => "{\"req_id\": #{job.id}, \"is_dryrun\": #{is_dryrun}}"}
       response = client.post(url, body)
 
