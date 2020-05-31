@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import textwrap, MySQLdb
 import logging
+import boto3
 
 class CrawlingPipeline:
     
@@ -49,14 +50,21 @@ class DryRunPipeline:
 
     def open_spider(self, spider):
         if not spider.is_dryrun: return
-        self.file = open('tmp/items.txt', 'w')
+        self.url_list = []
 
     def close_spider(self, spider):
         if not spider.is_dryrun: return
-        self.file.close()
+        # S3に書き込む
+        # 環境変数からurlが取れなかったのでとりあえずベタ書きする
+        s3 = boto3.resource('s3', endpoint_url='http://minio:9000', \
+                                  aws_access_key_id='accessKey', \
+                                  aws_secret_access_key='secretKey', \
+                                  region_name='us-east-1')
+        bucket_name = 'crawl-data'
+        bucket = s3.Bucket(bucket_name)
+        bucket.put_object(Key=f'{spider.req_id}/urllist.txt', Body = '\n'.join(self.url_list))
 
     def process_item(self, item, spider):
         if not spider.is_dryrun: return item
-        line = item['url'] + "\n"
-        self.file.write(line)
+        self.url_list.append(item['url'])
         return item
