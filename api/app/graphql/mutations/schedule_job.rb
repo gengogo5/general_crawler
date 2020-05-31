@@ -22,8 +22,7 @@ module Mutations
                  elsif job.schedule_type == 'intervals'
                    "every #{job.interval_hours} hours" 
                  else
-                  # TODO: 例外にする
-                   'now'
+                   raise GraphQL::ExecutionError.new('schedule type is invalid.')
                  end
 
       body = {'project'=> 'crawling',
