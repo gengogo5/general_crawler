@@ -11,6 +11,7 @@ from crawling.utils.rule_loader import RuleLoader
 class RSSCrawlSpider(XMLFeedSpider):
     name = 'rss_crawl'
     except_regexps = []
+    url_replace_pattern = None
     itemcounts = 0
 
     def __init__(self, *args, **kwargs):
@@ -27,6 +28,10 @@ class RSSCrawlSpider(XMLFeedSpider):
         self.link_node   = rules['link_node_name'] # 必須
         for p in params.get('except_article_patterns', []): # 任意
             self.except_regexps.append(re.compile(p))
+        rp = rules.get('url_replace_pattern','') # 任意
+        if rp:
+            self.url_replace_pattern = re.compile(rp)
+        self.replace_new_string = rules.get('replace_new_string','') # 任意
 
     # 繰り返しのタグ見つけたら、linkノードからurlを取得する
     def parse_node(self, response, node):
