@@ -102,3 +102,5 @@ DATABASE = {
     'passwd': 'password',
     'charset': 'utf8mb4',
 }
+
+SCHEDULER = 'crawling.scheduler.CustomScheduler'
