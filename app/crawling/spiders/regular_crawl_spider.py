@@ -11,10 +11,6 @@ class RegularCrawlSpider(CrawlSpider):
     name = 'regular_crawl'
     allowed_domains = []
     itemcounts = 0
-
-    custom_settings = {
-        'DUPEFILTER_CLASS': 'crawling.dupefilter.ArticleArchiveDupeFilter'
-    }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

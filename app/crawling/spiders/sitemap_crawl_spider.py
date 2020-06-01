@@ -15,10 +15,6 @@ class SitemapCrawlSpider(SitemapSpider):
     sitemap_rules = []
     itemcounts = 0
 
-    custom_settings = {
-        'DUPEFILTER_CLASS': 'crawling.dupefilter.ArticleArchiveDupeFilter'
-    }
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # 引数から要求IDを取得
