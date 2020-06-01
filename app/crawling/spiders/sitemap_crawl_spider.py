@@ -13,6 +13,7 @@ class SitemapCrawlSpider(SitemapSpider):
     sitemap_urls = []
     sitemap_follow = []
     sitemap_rules = []
+    url_replace_pattern = None
     itemcounts = 0
 
     def __init__(self, *args, **kwargs):
