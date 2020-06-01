@@ -16,8 +16,16 @@ class ArticleArchiveDupeFilter(RFPDupeFilter):
         self.conn = MySQLdb.connect(**params)
         self.conn.autocommit(True)
 
-    # DBに重複レコードがあったら既知と判断してDROP
     def request_seen(self, request):
+        # 既存の重複判定
+        fp = self.request_fingerprint(request)
+        if fp in self.fingerprints:
+            return True
+        self.fingerprints.add(fp)
+        if self.file:
+            self.file.write(fp + '\n')
+
+        # 独自の重複判定(登録済みレコード判定)
         request_url = request.url
         if self.spider.url_replace_pattern:
             request_url = re.sub(self.spider.url_replace_pattern, \
