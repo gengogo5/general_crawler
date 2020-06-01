@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import textwrap, MySQLdb
 import logging
+import re
 import boto3
 
 class CrawlingPipeline:
@@ -18,6 +19,13 @@ class CrawlingPipeline:
         self.conn.close()
 
     def process_item(self, item, spider):
+        # URL置換対応
+        # subの第2引数に正規表現オブジェクトが使えないので後方参照は不可
+        # dryrun用pipelineに渡す為にスキップより前に実行
+        if spider.url_replace_pattern:
+            item['url'] = re.sub(spider.url_replace_pattern, \
+                                 spider.replace_new_string, \
+                                 item['url'])
         if spider.is_dryrun: return item
 
         sql = textwrap.dedent('''\

@@ -102,3 +102,7 @@ DATABASE = {
     'passwd': 'password',
     'charset': 'utf8mb4',
 }
+
+# 独自フィルタとスケジューラ
+DUPEFILTER_CLASS = 'crawling.dupefilter.ArticleArchiveDupeFilter'
+SCHEDULER = 'crawling.scheduler.CustomScheduler'
