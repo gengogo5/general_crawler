@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import json
+import re
 from scrapy.exceptions import CloseSpider
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
@@ -10,6 +11,7 @@ from crawling.utils.rule_loader import RuleLoader
 class RegularCrawlSpider(CrawlSpider):
     name = 'regular_crawl'
     allowed_domains = []
+    url_replace_pattern = None
     itemcounts = 0
     
     def __init__(self, *args, **kwargs):
@@ -26,6 +28,10 @@ class RegularCrawlSpider(CrawlSpider):
         allow_patterns  = rules.get('article_patterns') # 必須
         deny_patterns   = rules.get('except_article_patterns', []) # 任意
         shouldFollow    = rules.get('should_follow', False) # 任意
+        rp = rules.get('url_replace_pattern','') # 任意
+        if rp:
+            self.url_replace_pattern = re.compile(rp)
+        self.replace_new_string = rules.get('replace_new_string','') # 任意
 
         # ルール設定
         # TODO: 正規表現を事前サニタイズするかどうか(検証済を受け入れる前提でも可)
