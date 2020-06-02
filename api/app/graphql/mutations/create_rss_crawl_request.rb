@@ -11,6 +11,7 @@ module Mutations
     argument :link_node_name, String, required: false
     argument :url_replace_pattern, String, required: false
     argument :replace_new_string, String, required: false
+    argument :user_agent, String, required: false
     argument :schedule_type, String, required: false
 
     def resolve(**args)
@@ -21,7 +22,8 @@ module Mutations
             tag_name: args[:tag_name],
             link_node_name: args[:link_node_name],
             url_replace_pattern: args[:url_replace_pattern],
-            replace_new_string: args[:replace_new_string]
+            replace_new_string: args[:replace_new_string],
+            user_agent: args[:user_agent],
           }
         ),
         schedule_type: args[:schedule_type]       

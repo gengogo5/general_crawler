@@ -14,6 +14,7 @@ class CrawlRequest < ApplicationRecord
   private
 
   # JSONのクロール設定をparseする
+  # TODO: パラメータが確定したらクエリ用に全部書く
   def parse_rules
     self.rss_urls = {:rss_urls => self[:rules]['rss_urls']}
     self.tag_name = {:tag_name => self[:rules]['tag_name']}
