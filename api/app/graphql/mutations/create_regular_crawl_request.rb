@@ -12,6 +12,7 @@ module Mutations
     argument :should_follow, Int, required: false
     argument :url_replace_pattern, String, required: false
     argument :replace_new_string, String, required: false
+    argument :user_agent, String, required: false
     argument :schedule_type, String, required: false
     argument :interval_hours, Int, required: false
 
@@ -26,6 +27,7 @@ module Mutations
             should_follow: args[:should_follow],
             url_replace_pattern: args[:url_replace_pattern],
             replace_new_string: args[:replace_new_string],
+            user_agent: args[:user_agent],
           }
         ),
         schedule_type: args[:schedule_type],
