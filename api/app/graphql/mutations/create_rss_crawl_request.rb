@@ -13,6 +13,7 @@ module Mutations
     argument :replace_new_string, String, required: false
     argument :user_agent, String, required: false
     argument :schedule_type, String, required: false
+    argument :interval_hours, Int, required: false
 
     def resolve(**args)
       request = CrawlRequest.create(
@@ -26,7 +27,8 @@ module Mutations
             user_agent: args[:user_agent],
           }
         ),
-        schedule_type: args[:schedule_type]       
+        schedule_type: args[:schedule_type],    
+        interval_hours: args[:interval_hours]   
       )
       {
         crawl_request: request,
