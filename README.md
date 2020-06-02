@@ -1,6 +1,157 @@
 # general_crawler
 汎用クローラのプロトタイプ
 
+## 初期設定
+### 事前インストール
+
+- [insomnia](https://insomnia.rest/graphql/)
+- docker
+- ruby
+
+### 手順
+1. `docker-compose build`
+
+2. `rake server:start`
+
+3. `rake mysql:migrate`
+
+4. `rake scrapy:push`
+
+5. http://localhost:9001 でminioブラウザにアクセスして`crawl-data`バケットを作成
+
+6. Insomniaからクロール設定登録(次項参照)
+
+## API
+
+### クロール設定(サイトマップ)
+
+<details>
+
+<summary>GraphQLリクエスト</summary>
+
+```graphql
+
+mutation {
+  createSitemapCrawlRequest(
+    input: {
+      jobType: "sitemap",
+      sitemapUrl: "https://example.com/sitemap.xml",
+      sitemapPatterns: ["sitemap-pt-post-2020-01"],
+      exceptArticlePatterns: ["https://example.com/99999"],
+      scheduleType: "now",
+    }) {
+    crawlRequest {
+      id
+      rules
+    }
+    result
+  }
+}
+```
+
+</details>
+
+
+### クロール設定(RSS)
+
+<details>
+
+<summary>GraphQLリクエスト</summary>
+
+```graphql
+
+mutation {
+  createRssCrawlRequest(
+    input: {
+      jobType: "rss",
+      rssUrls: ["https://news.example.com/rss/foobar.xml"],
+      tagName: "item",
+      linkNodeName: "link",
+      scheduleType: "now",
+    }) {
+    crawlRequest {
+      id
+      rules
+    }
+    result
+  }
+}
+```
+
+### クロール設定(サイトトップ)
+
+<details>
+
+<summary>GraphQLリクエスト</summary>
+
+```graphql
+
+mutation {
+  createRegularCrawlRequest(
+    input: {
+      jobType: "regular",
+      startUrls: ["https://corp.example.com/blog/articles"],
+      indexPatterns: ["https://corp.example.com/blog/articles/page/[2|3]"],
+      articlePatterns: ["https://corp.example.com/blog/\\d+"],
+      exceptArticlePatterns:[],
+      scheduleType: "intervals",
+      intervalHours: 3
+    }) {
+    crawlRequest {
+      id
+      rules
+    }
+    result
+  }
+}
+```
+
+</details>
+
+### ジョブ登録
+
+<details>
+
+<summary>GraphQLリクエスト</summary>
+
+```graphql
+
+mutation {
+  scheduleJob(
+    input: {
+      requestId: 4,
+      isDryrun: true
+    }) {
+    result
+    isDryrun
+  }
+}
+
+```
+
+</details>
+
+### ジョブ停止
+
+<details>
+
+<summary>GraphQLリクエスト</summary>
+
+```graphql
+
+mutation {
+  cancelJob(
+    input: {
+      requestId: 15
+    }) {
+    result
+  }
+}
+
+```
+
+</details>
+
 ## 補助コマンド
 Rakeで補助コマンドを提供する
 
