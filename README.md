@@ -78,6 +78,8 @@ mutation {
 }
 ```
 
+</details>
+
 ### クロール設定(サイトトップ)
 
 <details>
