@@ -2,6 +2,7 @@
 import scrapy
 import json
 import re
+import logging
 from scrapy.exceptions import CloseSpider
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
@@ -32,6 +33,8 @@ class RegularCrawlSpider(CrawlSpider):
         if rp:
             self.url_replace_pattern = re.compile(rp)
         self.replace_new_string = rules.get('replace_new_string','') # 任意
+        if rules.get('user_agent'):
+            self.user_agent = rules.get('user_agent')
 
         # ルール設定
         # TODO: 正規表現を事前サニタイズするかどうか(検証済を受け入れる前提でも可)

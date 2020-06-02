@@ -32,6 +32,8 @@ class RSSCrawlSpider(XMLFeedSpider):
         if rp:
             self.url_replace_pattern = re.compile(rp)
         self.replace_new_string = rules.get('replace_new_string','') # 任意
+        if rules.get('user_agent'):
+            self.user_agent = rules.get('user_agent')
 
     # 繰り返しのタグ見つけたら、linkノードからurlを取得する
     def parse_node(self, response, node):

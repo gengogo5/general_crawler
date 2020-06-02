@@ -36,6 +36,10 @@ class SitemapCrawlSpider(SitemapSpider):
         # Seedのサイトマップを追加
         self.sitemap_urls.append(sitemap_url)
 
+        # ユーザエージェントの書き換え
+        if rules.get('user_agent'):
+            self.user_agent = rules.get('user_agent')
+
         # サイトマップindex内の対象パターンを追加
         # 動的にルール追加するためにSitemapSpiderの変数をハック
         for p in sitemap_patterns:
