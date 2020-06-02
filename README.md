@@ -21,13 +21,11 @@
 
 6. Insomniaからクロール設定登録(次項参照)
 
-## API
-
-### クロール設定(サイトマップ)
+## API(GraphQL)
 
 <details>
 
-<summary>GraphQLリクエスト</summary>
+<summary>クロール設定(サイトマップ)</summary>
 
 ```graphql
 
@@ -52,11 +50,9 @@ mutation {
 </details>
 
 
-### クロール設定(RSS)
-
 <details>
 
-<summary>GraphQLリクエスト</summary>
+<summary>クロール設定(RSS)</summary>
 
 ```graphql
 
@@ -80,11 +76,9 @@ mutation {
 
 </details>
 
-### クロール設定(サイトトップ)
-
 <details>
 
-<summary>GraphQLリクエスト</summary>
+<summary>クロール設定(サイトトップ)</summary>
 
 ```graphql
 
@@ -110,11 +104,10 @@ mutation {
 
 </details>
 
-### ジョブ登録
 
 <details>
 
-<summary>GraphQLリクエスト</summary>
+<summary>ジョブ登録</summary>
 
 ```graphql
 
@@ -133,11 +126,9 @@ mutation {
 
 </details>
 
-### ジョブ停止
-
 <details>
 
-<summary>GraphQLリクエスト</summary>
+<summary>ジョブ停止</summary>
 
 ```graphql
 
