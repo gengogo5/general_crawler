@@ -12,6 +12,11 @@ module Mutations
     argument :url_replace_pattern, String, required: false
     argument :replace_new_string, String, required: false
     argument :user_agent, String, required: false
+    argument :login_url, String, required: false
+    argument :login_name, String, required: false
+    argument :login_password, String, required: false
+    argument :login_name_attr, String, required: false
+    argument :login_pass_attr, String, required: false
     argument :schedule_type, String, required: false
     argument :interval_hours, Int, required: false
 
@@ -25,6 +30,11 @@ module Mutations
             url_replace_pattern: args[:url_replace_pattern],
             replace_new_string: args[:replace_new_string],
             user_agent: args[:user_agent],
+            login_url: args[:login_url],
+            login_name: args[:login_name],
+            login_password: args[:login_password],
+            login_name_attr: args[:login_name_attr],
+            login_pass_attr: args[:login_pass_attr],
           }
         ),
         schedule_type: args[:schedule_type],    

@@ -13,6 +13,7 @@ class RegularCrawlSpider(CrawlSpider):
     name = 'regular_crawl'
     allowed_domains = []
     url_replace_pattern = None
+    login_url = None
     itemcounts = 0
     
     def __init__(self, *args, **kwargs):
@@ -35,6 +36,12 @@ class RegularCrawlSpider(CrawlSpider):
         self.replace_new_string = rules.get('replace_new_string','') # 任意
         if rules.get('user_agent'):
             self.user_agent = rules.get('user_agent')
+        ## formログイン関係
+        self.login_url = rules.get('login_url')
+        self.login_name = rules.get('login_name')
+        self.login_password = rules.get('login_password')
+        self.login_name_attr = rules.get('login_name_attr')
+        self.login_pass_attr = rules.get('login_pass_attr')
 
         # ルール設定
         # TODO: 正規表現を事前サニタイズするかどうか(検証済を受け入れる前提でも可)
@@ -59,3 +66,23 @@ class RegularCrawlSpider(CrawlSpider):
         item.set(item, response)
         yield item
     
+    def start_requests(self):
+        if self.login_url:
+            yield scrapy.Request(
+                url=self.login_url,
+                callback=self.login,
+                dont_filter=True)
+        else:
+            for url in self.start_urls:
+                yield scrapy.Request(url, dont_filter=True)
+    
+    def login(self, response):
+        return scrapy.FormRequest.from_response(
+                response,
+                formdata={self.login_name_attr: self.login_name, self.login_pass_attr: self.login_password},
+                callback=self.after_login
+            )
+
+    def after_login(self, response):
+        for url in self.start_urls:
+            yield scrapy.Request(url, dont_filter=True)
