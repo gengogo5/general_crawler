@@ -72,6 +72,7 @@ class SitemapCrawlSpider(SitemapSpider):
             for url in self.sitemap_urls:
                 yield scrapy.Request(url, self._parse_sitemap)
 
+    # TODO: Sitemapのformログインは動作未確認
     def login(self, response):
         return scrapy.FormRequest.from_response(
                 response,
