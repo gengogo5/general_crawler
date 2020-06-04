@@ -24,7 +24,7 @@ class RSSCrawlSpider(XMLFeedSpider):
 
         # DBから各種設定を取得
         rules = RuleLoader.find(self.req_id)
-        self.start_urls  = rules['rss_urls']  # 必須
+        self.start_urls  = rules['start_urls']  # 必須
         self.itertag     = rules['tag_name']  # 必須
         self.link_node   = rules['link_node_name'] # 必須
         for p in params.get('except_article_patterns', []): # 任意
