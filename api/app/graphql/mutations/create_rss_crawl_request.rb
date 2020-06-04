@@ -6,7 +6,7 @@ module Mutations
     field :result, Boolean, null: true
 
     argument :job_type, String, required: true
-    argument :rss_urls, [String], required: false
+    argument :start_urls, [String], required: false
     argument :tag_name, String, required: false
     argument :link_node_name, String, required: false
     argument :url_replace_pattern, String, required: false
@@ -24,7 +24,7 @@ module Mutations
       request = CrawlRequest.create(
         job_type: args[:job_type],
         rules: JSON.generate(
-          { rss_urls: args[:rss_urls],
+          { start_urls: args[:start_urls],
             tag_name: args[:tag_name],
             link_node_name: args[:link_node_name],
             url_replace_pattern: args[:url_replace_pattern],

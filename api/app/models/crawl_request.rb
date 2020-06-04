@@ -1,8 +1,7 @@
 class CrawlRequest < ApplicationRecord
 
   after_find :parse_rules
-  attr_accessor :rss_urls,
-                :tag_name,
+  attr_accessor :tag_name,
                 :link_node_name,
                 :except_article_patterns,
                 :start_urls,
@@ -16,7 +15,6 @@ class CrawlRequest < ApplicationRecord
   # JSONのクロール設定をparseする
   # TODO: パラメータが確定したらクエリ用に全部書く
   def parse_rules
-    self.rss_urls = {:rss_urls => self[:rules]['rss_urls']}
     self.tag_name = {:tag_name => self[:rules]['tag_name']}
     self.link_node_name = {:link_node_name => self[:rules]['link_node_name']}
     self.except_article_patterns = {:except_article_patterns => self[:rules]['except_article_patterns']}
