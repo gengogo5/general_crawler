@@ -14,6 +14,7 @@ class SitemapCrawlSpider(SitemapSpider):
     sitemap_follow = []
     sitemap_rules = []
     url_replace_pattern = None
+    login_url = None
     itemcounts = 0
 
     def __init__(self, *args, **kwargs):
@@ -52,7 +53,36 @@ class SitemapCrawlSpider(SitemapSpider):
         # サイトマップ以外はparseする
         self._cbs.append((re.compile('^(?!.*(\.xml|\.xml\.gz)$).*$'), getattr(self, 'parse')))
 
+        ## formログイン関係
+        self.login_url = rules.get('login_url')
+        self.login_name = rules.get('login_name')
+        self.login_password = rules.get('login_password')
+        self.login_name_attr = rules.get('login_name_attr')
+        self.login_pass_attr = rules.get('login_pass_attr')
+
         # TODO: 圧縮サイトマップをungzipする
+    
+    def start_requests(self):
+        if self.login_url:
+            yield scrapy.Request(
+                url=self.login_url,
+                callback=self.login,
+                dont_filter=True)
+        else:
+            for url in self.sitemap_urls:
+                yield scrapy.Request(url, self._parse_sitemap)
+
+    def login(self, response):
+        return scrapy.FormRequest.from_response(
+                response,
+                formdata={self.login_name_attr: self.login_name, self.login_pass_attr: self.login_password},
+                callback=self.after_login
+            )
+
+    # ログイン後は通常ルートと同じ
+    def after_login(self, response):
+        for url in self.sitemap_urls:
+            yield scrapy.Request(url, self._parse_sitemap)
 
     def parse(self, response):
         # dryrun設定
