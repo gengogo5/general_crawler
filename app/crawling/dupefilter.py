@@ -27,7 +27,7 @@ class ArticleArchiveDupeFilter(RFPDupeFilter):
 
         # 独自の重複判定(登録済みレコード判定)
         request_url = request.url
-        if self.spider.url_replace_pattern:
+        if 'url_replace_pattern' in dir(self.spider):
             request_url = re.sub(self.spider.url_replace_pattern, \
                                  self.spider.replace_new_string, \
                                  request_url)

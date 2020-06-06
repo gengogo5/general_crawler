@@ -15,7 +15,7 @@ class ArticleArchives(scrapy.Item):
 
     def set(self, item, response):
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        item['url'] = response.url # TODO: パラメータ除去
+        item['url'] = response.url
 
         content_type = response.headers.get('Content-Type').decode('utf-8')
         if 'html' in content_type:
@@ -24,5 +24,5 @@ class ArticleArchives(scrapy.Item):
             raise DropItem("Missing type in %s" % item)
         item['title'] = response.xpath('//title/text()').extract_first()
         item['updated_at'] = now
-        item['created_at'] = now
+        item['created_at'] = now # TODO: 再クロール時に登録しない
         return item

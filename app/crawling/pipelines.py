@@ -22,7 +22,7 @@ class CrawlingPipeline:
         # URL置換対応
         # subの第2引数に正規表現オブジェクトが使えないので後方参照は不可
         # dryrun用pipelineに渡す為にスキップより前に実行
-        if spider.url_replace_pattern:
+        if 'url_replace_pattern' in dir(spider):
             item['url'] = re.sub(spider.url_replace_pattern, \
                                  spider.replace_new_string, \
                                  item['url'])
