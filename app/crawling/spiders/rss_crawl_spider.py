@@ -11,9 +11,12 @@ from crawling.utils.rule_loader import RuleLoader
 class RSSCrawlSpider(XMLFeedSpider):
     name = 'rss_crawl'
     except_regexps = []
-    url_replace_pattern = None
     login_url = None
     itemcounts = 0
+
+    custom_settings ={
+      'DUPEFILTER_CLASS': 'crawling.dupefilter.ArticleArchiveDupeFilter',
+    }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
