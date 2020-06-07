@@ -10,7 +10,7 @@ RSSとかサイトマップとかから、いい感じに記事を取ってく�
 |スケジューラ|scrapy-do|
 |DB|MySQL|
 |API|Rails(GraphQL)|
-|画面|なんでもいい|
+|画面|Nuxt.js|
 |その他|S3(minio)|
 
 ポートとかの詳細は`docker-compose.yml`参照
