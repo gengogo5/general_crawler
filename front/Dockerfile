@@ -9,7 +9,8 @@ WORKDIR ${HOME}
 RUN apk update && \
     apk upgrade && \
     npm install -g npm && \
-    npm install -g @vue/cli
+    npm install -g @vue/cli \
+    npm i @nuxtjs/apollo
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
