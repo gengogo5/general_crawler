@@ -1,14 +1,8 @@
 module Mutations
   class UpdateCrawlRequest < BaseMutation
-    # TODO: define return fields
-    # field :post, Types::PostType, null: false
-
-    # TODO: define arguments
-    # argument :name, String, required: true
-
-    # TODO: define resolve method
-    # def resolve(name:)
-    #   { post: ... }
-    # end
+    # クロール種別ごとに必須パラメータが違う
+    # 共通の更新ロジックは若干厳しいかもしれない
+    # 実行中ジョブに影響する可能性もある
+    # いったんCreateとDeleteだけで進める
   end
 end
