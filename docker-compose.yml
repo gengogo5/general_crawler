@@ -9,8 +9,6 @@ services:
       - "7654:7654"
     volumes:
       - ./app:/usr/src/app
-    links:
-      - db
 
   api:
     build: ./api/
@@ -21,6 +19,15 @@ services:
       - "3000:3000"
     depends_on:
       - db
+
+  front:
+    container_name: frontend
+    build: front/
+    command: npm run dev
+    volumes:
+      - ./front:/app
+    ports:
+      - 8080:3000
 
   db:
     image: mysql:8.0
