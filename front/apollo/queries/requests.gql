@@ -1,0 +1,26 @@
+query {
+  requests {
+    id,
+    jobId,
+    jobType,
+    startUrls,
+    indexPatterns,
+    articlePatterns,
+    exceptArticlePatterns,
+    shouldFollow,
+    urlReplacePattern,
+    replaceNewString,
+    userAgent,
+    loginUrl,
+    loginName,
+    loginPassword,
+    loginNameAttr,
+    loginPassAttr,
+    tagName,
+    linkNodeName,
+    sitemapPatterns,
+    urlPrefix,
+    scheduleType,
+    intervalHours
+  }
+}
