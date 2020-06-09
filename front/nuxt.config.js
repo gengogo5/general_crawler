@@ -42,7 +42,16 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/apollo'
   ],
+  apollo: {
+    clientConfigs: {
+      default: {
+        // GraphQLサーバーのエンドポイント
+        httpEndpoint: 'http://api:3000/graphql',
+      }
+    },
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
