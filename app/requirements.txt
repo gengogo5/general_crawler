@@ -1,5 +1,5 @@
 ###### Requirements with Version Specifiers ######
-scrapy==2.1.0
+scrapy==2.5.1
 mysqlclient==1.4.6
 scrapy-do==0.4.0
 boto3==1.13.19
